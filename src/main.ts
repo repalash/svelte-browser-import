@@ -108,27 +108,29 @@ export async function importSvelteBundle(props: Partial<typeof defaultsProps>) {
 				let i = styles.length;
 				while (i--) styles[i].parentNode.removeChild(styles[i]);
 
-				if (window.component) {
-					try {
-						window.component.$destroy();
-					} catch (err) {
-						console.error(err);
-					}
-				}
+				// if (window.component) {
+				// 	try {
+				// 		window.component.$destroy();
+				// 	} catch (err) {
+				// 		console.error(err);
+				// 	}
+				// }
 
-				document.body.innerHTML = '';
-				window.location.hash = '';
-				window._svelteTransitionManager = null;
+				// document.body.innerHTML = '';
+				// window.location.hash = '';
+				// window._svelteTransitionManager = null;
 
 				${bundle.dom?.code}
 
-				window.component = new SvelteComponent.default({
-					target: document.body
-				});
+				// window.component = new SvelteComponent.default({
+				// 	target: document.body
+				// });
+				
+				return SvelteComponent.default;
 			`
 
-    const func = new Function('SvelteFiles', code)
-    // console.log(bundle)
+    const func = new Function('AppConstructor', code)
+    console.log(bundle)
     // console.log(func)
     return {
         dom: bundle.dom,
@@ -137,15 +139,24 @@ export async function importSvelteBundle(props: Partial<typeof defaultsProps>) {
 }
 
 export async function importSvelte(url: string){
-    return importSvelteBundle({urls: [url]})
+    return (await importSvelteBundle({urls: [url]})).render()
 }
 export async function importSvelteUrls(urls: string[]){
-    return importSvelteBundle({urls})
+    return (await importSvelteBundle({urls})).render()
 }
-export async function renderSvelte(url: string){
-    (await importSvelteBundle({urls: [url]})).render()
+export async function renderSvelte(url: string, props: any = {
+    target: document.body,
+    props: {
+        // name: 'world'
+    }
+}){
+    return new ((await importSvelteBundle({urls: [url]})).render())(props)
 }
-export async function renderSvelteUrls(urls: string[]){
-    (await importSvelteBundle({urls})).render()
+export async function renderSvelteUrls(urls: string[], props: any = {
+    target: document.body,
+    props: {
+        // name: 'world'
+    }
+}){
+    return new ((await importSvelteBundle({urls})).render())(props)
 }
-// todo: do we need to install these? @rollup/browser, esm-env, resolve.exports, acorn, estree-walker

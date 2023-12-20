@@ -23,14 +23,19 @@ Use the importSvelte and render functions to render a svelte app inside the body
     <title>Svelte Browser Import</title>
     <script type="module">
         import { importSvelte } from 'https://unpkg.com/svelte-browser-import/dist/svelte-browser-import.es.js';
-        const app = await importSvelte('./HelloWorld.svelte')
-        app.render()
+        const App = await importSvelte('./HelloWorld.svelte')
+        const app = new App({
+            target: document.getElementById('app'),
+        })
+        
+        // app.$destroy() // destroy the app
         
         // or just 
         // renderSvelte('./HelloWorld.svelte')
     </script>
 </head>
 <body>
+<div id="app"></div>
 </body>
 </html>
 ```
@@ -39,7 +44,7 @@ Use the importSvelte and render functions to render a svelte app inside the body
 
 To import multiple files which import each other, use the `importSvelteUrls` or `importSvelteBundle` function to import the files and then use the `render` function to render the app.
 
-This needs a file named `App.svelte` which is the entry point, if not provided, the first file in the list will be renamed to `App.svelte`.
+This needs a file named `App.svelte` which is the entry point, if not provided, the only file in the list will be renamed to `App.svelte`, if multiple files, then an `App.svelte` is created that renders all the files as components in the order they are provided.
 
 ```html
 <!DOCTYPE html>
@@ -49,14 +54,23 @@ This needs a file named `App.svelte` which is the entry point, if not provided, 
     <title>Svelte Browser Import</title>
     <script type="module">
         import { importSvelteUrls } from 'https://unpkg.com/svelte-browser-import/dist/svelte-browser-import.es.js';
-        const app = await importSvelteUrls([
+        const App = await importSvelteUrls([
             './App.svelte',
             './Nested.svelte',
         ])
-        app.render()
+        const app = new App({
+            target: document.getElementById('app'),
+        })
+        
+        // or just 
+        // renderSvelteUrls([
+        //     './App.svelte',
+        //     './Nested.svelte',
+        // ])
     </script>
 </head>
 <body>
+<div id="app"></div>
 </body>
 </html>
 ```
@@ -73,7 +87,7 @@ Use the `importSvelteBundle` function to get access to all the parameters. Check
     <title>Svelte Browser Import</title>
     <script type="module">
         import { importSvelteBundle } from 'https://unpkg.com/svelte-browser-import/dist/svelte-browser-import.es.js';
-        const app = await importSvelteBundle({
+        const res = await importSvelteBundle({
             urls: [
                 './App.svelte',
                 './Nested.svelte',
@@ -94,10 +108,15 @@ Use the `importSvelteBundle` function to get access to all the parameters. Check
                 console.log(val)
             },
         })
-        app.render()
+        console.log(res)
+        const App = new res.render()
+        const app = new App({
+            target: document.getElementById('app'),
+        })
     </script>
 </head>
 <body>
+<div id="app"></div>
 </body>
 </html>
 ```
@@ -113,8 +132,10 @@ Use the `importSvelteBundle` function to get access to all the parameters. Check
     <script src="https://unpkg.com/svelte-browser-import"></script>
     <script>
         const { importSvelte } = window["svelte-browser-import"]
-        const app = await importSvelte('./HelloWorld.svelte')
-        app.render()
+        const App = await importSvelte('./HelloWorld.svelte')
+        const app = new App({
+            target: document.getElementById('app'),
+        })
     </script>
 </head>
 <body>

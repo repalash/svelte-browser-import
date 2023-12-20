@@ -20,13 +20,18 @@
       import { importSvelte } from "../svelte-browser-import.es.js";
       // import { importSvelte } from "../../src/main.ts";
 
-      const res = await importSvelte('./HelloWorld.svelte')
+      const App = await importSvelte('./HelloWorld.svelte')
       // or
       // const res = await importSvelteBundle({
       //   urls: ['./HelloWorld.svelte'],
       // })
-      console.log(res)
-      res.render()
+      console.log(App)
+      const app = new App({
+        target: document.getElementById('app'),
+        props: {
+          name: 'custom'
+        }
+      })
 
       // or just renderSvelte('./HelloWorld.svelte')
     </script>
