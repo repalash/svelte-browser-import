@@ -1,4 +1,4 @@
-import Worker from './workers/bundler/index.js?worker';
+import Worker from './workers/bundler/index.js?worker&inline';
 
 const workers = new Map();
 
