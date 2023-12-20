@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Svelte Examples Testing</title>
+    <style>
+        html,
+        body{
+            margin-left: 0.5rem;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module">
+      import { importSvelte } from "./src/main.ts";
+
+      window.addEventListener('DOMContentLoaded', async ()=>{
+
+        // https://github.com/sveltejs/svelte/tree/main/documentation/examples
+        const exampleData = await(await fetch('./examples/docs-examples-data.json')).json();
+        console.log(exampleData);
+
+        const div = document.getElementById("app")
+        exampleData.forEach((example) => {
+          const { title, slug, examples } = example;
+          div.innerHTML += `<h1>${title}</h1>`;
+          examples.forEach((example) => {
+            const { title, slug: slug2, files } = example;
+            div.innerHTML += `
+<h2>${title}
+<button onclick="window.location.href = '?${slug}_${slug2}'">Load</button>
+</h2>`;
+            // div.innerHTML += `<button onclick="importExample('${slug}', '${slug2}')">Load</button>`;
+            files.forEach((file) => {
+              const { name } = file;
+              div.innerHTML += `<p>${name}</p>`;
+            });
+          });
+        });
+
+        window.importExample = (slug, slug2) => {
+          console.log(slug, slug2);
+          const files = {
+            files: exampleData.find(s=>s.slug === slug).examples.find(s=>s.slug === slug2).files.map((file) => ({
+              name: file.name.split("/").pop().replace(/\..+$/, ""),
+              type: file.type,
+              url: file.url,
+              source: file.content,
+            })),
+          }
+          console.log(files);
+          div.innerHTML = '';
+          importSvelte(files);
+        };
+
+        if(window.location.search) {
+          const [slug, slug2] = window.location.search.replace('?', '').split('_');
+          window.importExample(slug, slug2);
+        }
+
+      })
+      //
+      // const files = ['samples/HelloWorld.svelte'];
+      // importSvelte({
+      //   files: files.map((file) => ({
+      //     name: file.split('/').pop().replace(/\..+$/, ''),
+      //     type: file.split('.').pop(),
+      //     url: file,
+      //   })),
+      // })
+
+    </script>
+  </body>
+</html>

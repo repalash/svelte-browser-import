@@ -1,0 +1,39 @@
+{
+  "name": "svelte-browser-import",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "npm run build"
+  },
+  "main": "./dist/svelte-browser-import.umd.js",
+  "module": "./dist/svelte-browser-import.es.js",
+  "browser": "./dist/svelte-browser-import.umd.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/svelte-browser-import.es.js",
+      "require": "./dist/svelte-browser-import.umd.js",
+      "browser": "./dist/svelte-browser-import.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "repalash <palash@shaders.app>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/repalash/svelte-browser-import/issues"
+  },
+  "homepage": "https://github.com/repalash/svelte-browser-import#readme",
+  "devDependencies": {
+    "@sveltejs/repl": "^0.6.0",
+    "rollup-plugin-license": "^3.0.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.6.4"
+  },
+  "dependencies": {
+  }
+}

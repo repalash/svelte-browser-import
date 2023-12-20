@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Svelte Examples Testing</title>
+    <style>
+        html,
+        body{
+            margin-left: 0.5rem;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module">
+      import { renderSvelte } from "../svelte-browser-import.es.js";
+      // import { renderSvelte } from "../../src/main.ts";
+
+      renderSvelte('./HelloWorld.svelte')
+    </script>
+  </body>
+</html>
