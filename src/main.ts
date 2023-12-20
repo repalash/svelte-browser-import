@@ -130,7 +130,7 @@ export async function importSvelteBundle(props: Partial<typeof defaultsProps>) {
 			`
 
     const func = new Function('AppConstructor', code)
-    console.log(bundle)
+    // console.log(bundle)
     // console.log(func)
     return {
         dom: bundle.dom,

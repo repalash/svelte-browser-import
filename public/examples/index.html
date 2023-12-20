@@ -56,7 +56,7 @@
           }
           console.log(files);
           div.innerHTML = '';
-          console.log(importSvelteBundle(files).then(r=>r.render()));
+          console.log(importSvelteBundle(files).then(r=>new (r.render())({target: document.body})));
         };
 
         if(window.location.search) {
