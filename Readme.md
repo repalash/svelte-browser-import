@@ -66,7 +66,9 @@ This needs a file named `App.svelte` which is the entry point, if not provided, 
         // renderSvelteUrls([
         //     './App.svelte',
         //     './Nested.svelte',
-        // ])
+        // ], {
+        // target: document.getElementById('app'),
+        // })
     </script>
 </head>
 <body>
@@ -132,13 +134,21 @@ Use the `importSvelteBundle` function to get access to all the parameters. Check
     <script src="https://unpkg.com/svelte-browser-import"></script>
     <script>
         const { importSvelte } = window["svelte-browser-import"]
-        const App = await importSvelte('./HelloWorld.svelte')
-        const app = new App({
-            target: document.getElementById('app'),
+
+        importSvelte('./HelloWorld.svelte').then(App=> {
+            const app = new App({
+                target: document.getElementById('app'),
+                props: {
+                    name: 'custom app'
+                }
+            })
+            // to destroy the app
+            // app.$destroy()
         })
     </script>
 </head>
 <body>
+    <div id="app"></div>
 </body>
 </html>
 ```
