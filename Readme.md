@@ -1,8 +1,13 @@
 # Svelte Browser Import
 
+[![NPM Package](https://img.shields.io/npm/v/svelte-browser-import.svg)](https://www.npmjs.com/package/svelte-browser-import)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/repalash/svelte-browser-import/blob/master/LICENSE)
+
 This is a simple library that includes the svelte compiler and provides functions to import and render a Svelte App/Component (.svelte files) directly inside a browser without a build step. (Useful for development and testing)
 
 Extracted out the Bundler from the [Svelte REPL](https://svelte.dev/repl/).
+
+Working demos: https://repalash.com/svelte-browser-import/index.html
 
 ## Usage
 
@@ -107,7 +112,7 @@ Use the `importSvelteBundle` function to get access to all the parameters. Check
     <title>Svelte Browser Import</title>
     <script src="https://unpkg.com/svelte-browser-import"></script>
     <script>
-        const { importSvelte } = svelteBrowserImport
+        const { importSvelte } = window["svelte-browser-import"]
         const app = await importSvelte('./HelloWorld.svelte')
         app.render()
     </script>
