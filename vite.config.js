@@ -4,6 +4,7 @@ import license from 'rollup-plugin-license';
 import packageJson from "./package.json";
 
 export default defineConfig({
+    base: './',
     build: {
         lib: {
             entry: 'src/main.ts',
