@@ -3,7 +3,7 @@ import Bundler from './svelte-bundler/Bundler'
 
 export const defaultsProps = {
     packagesUrl: 'https://unpkg.com',
-    svelteUrl: 'https://unpkg.com/svelte',
+    svelteUrl: 'https://unpkg.com/svelte@4',
     injectedJS: '',
     injectedCSS: '',
     onstatus: (val: string | null) => {

@@ -1,11 +1,12 @@
 {
   "name": "svelte-browser-import",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "scripts": {
     "build": "vite build",
     "preview": "vite preview",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "run-publish": "git diff --exit-code --name-only HEAD * && npm run prepare && npm publish && git tag v$npm_package_version"
   },
   "main": "./dist/svelte-browser-import.umd.js",
   "module": "./dist/svelte-browser-import.es.js",
